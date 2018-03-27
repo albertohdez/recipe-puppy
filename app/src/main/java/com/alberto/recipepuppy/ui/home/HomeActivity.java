@@ -1,9 +1,11 @@
-package com.alberto.recipepuppy;
+package com.alberto.recipepuppy.ui.home;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomeActivity extends AppCompatActivity {
+import com.alberto.recipepuppy.R;
+import com.alberto.recipepuppy.common.view.activity.BaseActivity;
+
+public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
