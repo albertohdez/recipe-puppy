@@ -3,7 +3,7 @@ package com.alberto.recipepuppy.ui.home;
 
 import com.alberto.recipepuppy.common.model.response.SearchResponse;
 import com.alberto.recipepuppy.common.view.presenter.BasePresenter;
-import com.alberto.recipepuppy.data.service.AppService;
+import com.alberto.recipepuppy.service.AppService;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

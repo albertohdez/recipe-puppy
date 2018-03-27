@@ -1,4 +1,4 @@
-package com.alberto.recipepuppy.data.service;
+package com.alberto.recipepuppy.service;
 
 
 import com.alberto.recipepuppy.common.model.response.SearchResponse;

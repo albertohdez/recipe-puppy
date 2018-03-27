@@ -3,9 +3,9 @@ package com.alberto.recipepuppy.injection.module;
 import android.content.Context;
 
 import com.alberto.recipepuppy.RPApplication;
-import com.alberto.recipepuppy.data.service.ApiClient;
-import com.alberto.recipepuppy.data.service.AppService;
-import com.alberto.recipepuppy.data.service.AppServiceImpl;
+import com.alberto.recipepuppy.service.ApiClient;
+import com.alberto.recipepuppy.service.AppService;
+import com.alberto.recipepuppy.service.AppServiceImpl;
 
 import javax.inject.Singleton;
 

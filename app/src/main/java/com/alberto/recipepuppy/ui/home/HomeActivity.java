@@ -1,5 +1,6 @@
 package com.alberto.recipepuppy.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,6 +17,7 @@ import com.alberto.recipepuppy.R;
 import com.alberto.recipepuppy.common.model.SearchDTO;
 import com.alberto.recipepuppy.common.model.response.SearchResponse;
 import com.alberto.recipepuppy.common.view.activity.BaseActivity;
+import com.alberto.recipepuppy.ui.detail.RecipeDetailActivity;
 import com.alberto.recipepuppy.ui.home.adapter.RecipesAdapter;
 
 import java.util.ArrayList;
@@ -98,12 +100,12 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
     @Override
     public void searchError() {
         showEmptyView(true);
-        //TODO Error dialog
     }
 
     @Override
     public void onItemClick(SearchDTO searchDTO) {
-        //TODO
+        Intent intent = RecipeDetailActivity.newInstance(this, searchDTO);
+        startActivity(intent);
     }
 
     private void setupRecyclerView() {

@@ -1,4 +1,4 @@
-package com.alberto.recipepuppy.data.service;
+package com.alberto.recipepuppy.service;
 
 
 import retrofit2.Retrofit;

@@ -2,7 +2,7 @@ package com.alberto.recipepuppy.injection.component;
 
 import com.alberto.recipepuppy.RPApplication;
 import com.alberto.recipepuppy.common.view.activity.BaseActivity;
-import com.alberto.recipepuppy.data.service.AppService;
+import com.alberto.recipepuppy.service.AppService;
 import com.alberto.recipepuppy.injection.module.ApplicationModule;
 
 import javax.inject.Singleton;

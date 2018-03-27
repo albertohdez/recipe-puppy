@@ -23,6 +23,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".common.view.activity.BaseActivity" />
+        <activity
+            android:name=".ui.detail.RecipeDetailActivity"
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
