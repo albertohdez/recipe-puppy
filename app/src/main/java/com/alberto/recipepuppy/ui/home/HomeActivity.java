@@ -9,6 +9,8 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alberto.recipepuppy.R;
 import com.alberto.recipepuppy.common.model.SearchDTO;
@@ -29,11 +31,16 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.emptyView)
+    TextView emptyView;
+
     @BindView(R.id.rvRecipes)
     RecyclerView rvRecipes;
 
     @Inject
     HomePresenter homePresenter;
+
+    private String lastSearch = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                lastSearch = query;
                 myActionMenuItem.collapseActionView();
                 return false;
             }
@@ -69,8 +77,11 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
             public boolean onQueryTextChange(String query) {
                 if (query.length() > 2) {
                     homePresenter.searchQuery(query);
+                } else if (!lastSearch.isEmpty()) {
+                    homePresenter.searchQuery(lastSearch);
                 } else {
                     updateRecyclerView(new ArrayList<SearchDTO>());
+                    showEmptyView(true);
                 }
                 return false;
             }
@@ -80,12 +91,14 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
 
     @Override
     public void searchSuccess(SearchResponse searchResponse) {
+        showEmptyView(searchResponse.getResults().size() == 0);
         updateRecyclerView(searchResponse.getResults());
     }
 
     @Override
     public void searchError() {
-        //TODO
+        showEmptyView(true);
+        //TODO Error dialog
     }
 
     @Override
@@ -105,5 +118,9 @@ public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAd
         RecipesAdapter adapter = new RecipesAdapter(results);
         adapter.setOnItemClickListener(this);
         rvRecipes.setAdapter(adapter);
+    }
+
+    private void showEmptyView(boolean show) {
+        emptyView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 }
