@@ -1,28 +1,55 @@
 package com.alberto.recipepuppy.ui.home;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alberto.recipepuppy.R;
+import com.alberto.recipepuppy.common.model.SearchDTO;
+import com.alberto.recipepuppy.common.model.response.SearchResponse;
 import com.alberto.recipepuppy.common.view.activity.BaseActivity;
+import com.alberto.recipepuppy.ui.home.adapter.RecipesAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements HomeMvpView, RecipesAdapter.OnItemClickListener {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.rvRecipes)
+    RecyclerView rvRecipes;
+
+    @Inject
+    HomePresenter homePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivityComponent().inject(this);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        homePresenter.attachView(this);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupRecyclerView();
     }
 
     @Override
@@ -39,10 +66,44 @@ public class HomeActivity extends BaseActivity {
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
+            public boolean onQueryTextChange(String query) {
+                if (query.length() > 2) {
+                    homePresenter.searchQuery(query);
+                } else {
+                    updateRecyclerView(new ArrayList<SearchDTO>());
+                }
                 return false;
             }
         });
         return true;
+    }
+
+    @Override
+    public void searchSuccess(SearchResponse searchResponse) {
+        updateRecyclerView(searchResponse.getResults());
+    }
+
+    @Override
+    public void searchError() {
+        //TODO
+    }
+
+    @Override
+    public void onItemClick(SearchDTO searchDTO) {
+        //TODO
+    }
+
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvRecipes.setLayoutManager(layoutManager);
+        rvRecipes.setHasFixedSize(true);
+        rvRecipes.setItemAnimator(new DefaultItemAnimator());
+        rvRecipes.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    private void updateRecyclerView(List<SearchDTO> results) {
+        RecipesAdapter adapter = new RecipesAdapter(results);
+        adapter.setOnItemClickListener(this);
+        rvRecipes.setAdapter(adapter);
     }
 }

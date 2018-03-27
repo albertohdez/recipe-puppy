@@ -2,6 +2,7 @@ package com.alberto.recipepuppy.injection.module;
 
 import android.app.Activity;
 
+import com.alberto.recipepuppy.data.service.AppService;
 import com.alberto.recipepuppy.injection.annotation.PerActivity;
 import com.alberto.recipepuppy.ui.home.HomePresenter;
 
@@ -25,8 +26,8 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    HomePresenter provideHomePresenter() {
-        return new HomePresenter();
+    HomePresenter provideHomePresenter(AppService appService) {
+        return new HomePresenter(appService);
     }
 
 }
