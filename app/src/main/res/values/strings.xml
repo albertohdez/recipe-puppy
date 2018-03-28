@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">RecipePuppy</string>
+    <string name="empty_view">Looks like you don\'t have recipes</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="reference">Web reference</string>
+</resources>
